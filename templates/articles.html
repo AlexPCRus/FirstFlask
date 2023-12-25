@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}
+List of articles
+{% endblock %}
+
+{% block body %}
+<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom">
+    <nav class="my-2 my-md-0 mr-md-3">
+        <a class="p-2 text-dark" href="/create-article">New article</a>
+    </nav>
+</div>
+
+<div class="container mt-5">
+    {% for elem in articles %}
+    <div class="alert alert-info">
+        <h2>{{ elem.title }}</h2>
+        <p>{{ elem.intro }}</p>
+        <p><b>{{ elem.date.date() }}</b></p>
+        <a href="/posts/{{ elem.id }}" class="btn btn-warning">Details</a>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
