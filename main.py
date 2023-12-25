@@ -52,6 +52,39 @@ def create_article():
         return render_template('create-article.html')
 
 
+@app.route('/articles/<int:articleid>')
+def article_details(articleid):
+    article = Article.query.get(articleid)
+    return render_template('article-detail.html', article=article)
+
+
+@app.route('/articles/<int:articleid>/delete')
+def delete_article(articleid):
+    article = Article.query.get_or_404(articleid)
+    try:
+        db.session.delete(article)
+        db.session.commit()
+        return redirect('/articles')
+    except:
+        return "Error while deleting article"
+
+
+@app.route('/articles/<int:articleid>/update', methods=['POST', 'GET'])
+def update_article(articleid):
+    article = Article.query.get(articleid)
+    if request.method == "POST":
+        article.title = request.form['title']
+        article.intro = request.form['intro']
+        article.text = request.form['text']
+        try:
+            db.session.commit()
+            return redirect('/articles')
+        except:
+            return "Error while updating article"
+    else:
+        return render_template('update-article.html', article=article)
+
+
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()

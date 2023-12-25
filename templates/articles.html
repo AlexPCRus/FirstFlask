@@ -12,13 +12,17 @@ List of articles
 </div>
 
 <div class="container mt-5">
-    {% for elem in articles %}
-    <div class="alert alert-info">
-        <h2>{{ elem.title }}</h2>
-        <p>{{ elem.intro }}</p>
-        <p><b>{{ elem.date.date() }}</b></p>
-        <a href="/posts/{{ elem.id }}" class="btn btn-warning">Details</a>
-    </div>
-    {% endfor %}
+    {% if articles|length > 0 %}
+        {% for elem in articles %}
+        <div class="alert alert-info">
+            <h2>{{ elem.title }}</h2>
+            <p>{{ elem.intro }}</p>
+            <p><b>{{ elem.date.date() }}</b></p>
+            <a href="/articles/{{ elem.id }}" class="btn btn-warning">Details</a>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p>Articles not found</p>
+    {% endif %}
 </div>
 {% endblock %}
